@@ -1,0 +1,58 @@
+version: '3.9'
+
+networks:
+  dbTestNet:
+
+services:
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    depends_on:
+      - db
+      - phpMyAdmin
+    ports:
+      - 8080:80
+    networks:
+      - dbTestNet
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+      - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
+      - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+      - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
+      - WORDPRESS_TABLE_PREFIX=${WORDPRESS_TABLE_PREFIX}
+      - WORDPRESS_DEBUG=${WORDPRESS_DEBUG}
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
+    networks:
+      - dbTestNet
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpMyAdmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - PMA_HOST=${PMA_HOST}
+      - PMA_USER=${PMA_USER}
+      - PMA_PASSWORD=${PMA_PASSWORD}
+    networks:
+      - dbTestNet
+    ports:
+      - "80:80"
+
+volumes:
+  db_data:

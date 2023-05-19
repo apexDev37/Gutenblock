@@ -49,5 +49,7 @@ wp-config.php
 
 
 # Environments
-# Do not track any .env files
-.env
+#
+# Do not track any files
+# ending with .env
+*.env

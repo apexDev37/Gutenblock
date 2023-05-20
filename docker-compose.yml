@@ -1,8 +1,5 @@
 version: '3.9'
 
-networks:
-  dbTestNet:
-
 services:
 
   wordpress:
@@ -14,7 +11,7 @@ services:
     ports:
       - 8080:80
     networks:
-      - dbTestNet
+      - wp-network
     volumes:
       - ./:/var/www/html
     env_file:
@@ -25,7 +22,7 @@ services:
     container_name: db
     restart: always
     networks:
-      - dbTestNet
+      - wp-network
     ports:
       - "3306:3306"
     volumes:
@@ -40,7 +37,7 @@ services:
     depends_on:
       - db
     networks:
-      - dbTestNet
+      - wp-network
     ports:
       - "80:80"
     env_file:
@@ -48,3 +45,6 @@ services:
 
 volumes:
   db_data:
+
+networks:
+  wp-network:

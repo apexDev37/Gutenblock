@@ -17,27 +17,21 @@ services:
       - dbTestNet
     volumes:
       - ./:/var/www/html
-    environment:
-      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
-      - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
-      - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
-      - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
-      - WORDPRESS_TABLE_PREFIX=${WORDPRESS_TABLE_PREFIX}
-      - WORDPRESS_DEBUG=${WORDPRESS_DEBUG}
+    env_file:
+      - ./configuration/wordpress.env
 
   db:
     image: mysql:5.7
     container_name: db
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
     networks:
       - dbTestNet
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    env_file:
+      - ./configuration/mysql.env
 
   phpMyAdmin:
     image: phpmyadmin/phpmyadmin
@@ -45,14 +39,12 @@ services:
     restart: always
     depends_on:
       - db
-    environment:
-      - PMA_HOST=${PMA_HOST}
-      - PMA_USER=${PMA_USER}
-      - PMA_PASSWORD=${PMA_PASSWORD}
     networks:
       - dbTestNet
     ports:
       - "80:80"
+    env_file:
+      - ./configuration/phpmyadmin.env
 
 volumes:
   db_data:

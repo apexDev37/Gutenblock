@@ -14,7 +14,8 @@ username=$(awk -F: -v uid=1000 '$3 == uid { print $1 }' /etc/passwd)
 usermod -aG www-data $username
 
 # Give group www-data write permissions.
-sudo chmod 775 ../../wp-content
+cd ../../
+sudo chmod -R 775 wp-content
 
 # Log out and back in to apply the changes.
 echo "Please log out and back in to apply the changes."

@@ -25,7 +25,7 @@ function create_block_hello_dolly_block_block_init() {
 }
 add_action( 'init', 'create_block_hello_dolly_block_block_init' );
 
-function hello_dolly_get_lyric() {
+function hello_dolly_block_get_lyric() {
 	/** These are the lyrics to Hello Dolly */
 	$lyrics = "Hello, Dolly
 Well, hello, Dolly
@@ -63,8 +63,8 @@ Dolly'll never go away again";
 }
 
 // This just echoes the chosen line, we'll position it later.
-function hello_dolly() {
-	$chosen = hello_dolly_get_lyric();
+function hello_dolly_block_render() {
+	$chosen = hello_dolly_block_get_lyric();
 	$lang   = '';
 	if ( 'en_' !== substr( get_user_locale(), 0, 3 ) ) {
 		$lang = ' lang="en"';

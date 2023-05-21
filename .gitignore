@@ -53,3 +53,4 @@ wp-config.php
 # Do not track any files
 # ending with .env
 *.env
+.vscode

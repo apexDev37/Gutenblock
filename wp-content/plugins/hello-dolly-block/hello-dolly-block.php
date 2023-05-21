@@ -70,8 +70,8 @@ function hello_dolly_block_render() {
 		$lang = ' lang="en"';
 	}
 
-	printf(
-		'<p id="dolly"><span class="screen-reader-text">%s </span><span dir="ltr"%s>%s</span></p>',
+	return sprintf(
+		'<span class="screen-reader-text">%s </span><span dir="ltr"%s>%s</span>',
 		__( 'Quote from Hello Dolly song, by Jerry Herman:', 'hello-dolly' ),
 		$lang,
 		$chosen

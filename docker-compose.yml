@@ -14,6 +14,7 @@ services:
       - wp-network
     volumes:
       - ./wp-content:/var/www/html/wp-content
+      - ./wp-includes:/var/www/html/wp-includes
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     env_file:
       - ./configuration/wordpress.env
